@@ -6,6 +6,7 @@ from skimage import transform
 from skimage import util
 import numpy as np
 import tensorflow as tf
+import scipy
 
 def rotate_randomly(img):
   random_degree = random.uniform(-180, 180)
@@ -16,6 +17,12 @@ def add_noise_randomly(img):
   #temp = img+noise
   #tf.reshape(temp,img.shape)
   return sk.util.random_noise(img)
+
+def translate(image, offset, isseg=False):
+    order = 0 if isseg == True else 5
+
+    return scipy.ndimage.interpolation.shift(image, (int(offset[0]), int(offset[1]), 0), order=order, mode='nearest')
+
 
 def flip_upside_down(img):
   return np.flipud(img)
