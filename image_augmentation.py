@@ -19,10 +19,11 @@ def add_noise_randomly(img):
   return sk.util.random_noise(img)
 
 def translate(image, offset, isseg=False):
-    order = 0 if isseg == True else 5
+  order = 0 if isseg == True else 5
+  return scipy.ndimage.interpolation.shift(image, (int(offset[0]), int(offset[1]), 0), order=order, mode='nearest')
 
-    return scipy.ndimage.interpolation.shift(image, (int(offset[0]), int(offset[1]), 0), order=order, mode='nearest')
-
+def rescale_image(img,sc):
+  return sk.transform.rescale(img, scale=sc, mode='constant')
 
 def flip_upside_down(img):
   return np.flipud(img)
