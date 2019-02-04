@@ -23,7 +23,7 @@ def translate(image, offset, isseg=False):
   return scipy.ndimage.interpolation.shift(image, (int(offset[0]), int(offset[1]), 0), order=order, mode='nearest')
 
 def rescale_image(img,sc):
-  return sk.transform.rescale(img, scale=sc, mode='constant')
+  return sk.transform.rescale(img, scale=sc, preserve_range=True)
 
 def flip_upside_down(img):
   return np.flipud(img)
