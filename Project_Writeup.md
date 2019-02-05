@@ -18,8 +18,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./Random_Signs.jpg "Visualization"
-[image2]: ./Histogram.jpg "Histogram of classes"
+[image1]: Random_Signs.jpg "Visualization"
+[image2]: Histogram.jpg "Histogram of classes"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
