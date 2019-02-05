@@ -111,6 +111,23 @@ My final model consisted of the following layers:
 | Softmax				| etc.        									|
 |						|												|
 |						|												|
+
+
+* Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
+* Activation_1: ReLu(Layer_1)
+* Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
+* Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
+* Activation_2: ReLu(Layer_2)
+* Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
+* Layer_3: 5x5 Convolution. Input --> 5x5x16, Output 1x1x400
+* Activation_3: ReLu(Layer_3)
+* Flatten Layer_2 and Layer_3 both with size 400
+* Concatenate flattened Layer_2 and Layer_3, size 800
+* Dropout
+* Fully Connected Layer_4: Input --> 800, Output --> 43
+* Logits = Output of Fully Connected Layer_4
+
+
  
 
 
@@ -127,9 +144,41 @@ My final model results were:
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
+* Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
+* Activation_1: ReLu(Layer_1)
+* Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
+* Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
+* Activation_2: ReLu(Layer_2)
+* Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
+* Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
+* Fully Connected Layer_1: Input --> 400, Output --> 120
+* Activation_3: ReLu(Fully Connected Layer_1)
+* Dropout
+* Fully Connected Layer_2: Input --> 120, Output --> 84
+* Activation_4: ReLu(Fully Connected Layer_2)
+* Dropout
+* Fully Connected Layer_3: Input --> 84, Output -->83
+* Logits = ouput of Fully Connected Layer_3
+
+
+
 * What were some problems with the initial architecture?
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 * Which parameters were tuned? How were they adjusted and why?
+
+The model uses AdamOptimizer for both LeNet and Stage_2_LeNet. Following values were used for the hyperparameters:
+
+* BATCH_SIZE: 100
+* EPOCHS: 60 
+* Learning rate: 0.0010
+* mu(mean) = 0.0
+* sigma(SD) = 0.1
+* dropout(keep_prob) = 0.5
+
+As such these parameters were fixed after trying out a lot of different while tuning the hyperparameters.
+
+
+
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
 If a well known architecture was chosen:
