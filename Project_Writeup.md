@@ -16,10 +16,6 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[//]: # (Image References)
-
-[image1]: ./Random_Signs.jpg "Visualization"
-[image2]: ./Histogram.jpg "Histogram of classes"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -52,7 +48,7 @@ signs data set:
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. I first display 20 random images from the training set and followed by a hisogram of the training set with Class ID on the x axis and number/frequency of the traffic sign belonging to that class ID denoted by the bar chart.
+Here is an exploratory visualization of the data set. I first display 20 random images with thier Class IDs from the training set and followed by a hisogram of the training set with Class ID on the x axis and number/frequency of the traffic sign belonging to that class ID bucket denoted by the bar chart.
 
 ![Random Images from the training set](./writeup_images/Random_Signs.jpg)
 ![Histogram of training set](./writeup_images/Histogram.jpg)
