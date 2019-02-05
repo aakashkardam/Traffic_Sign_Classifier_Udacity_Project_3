@@ -57,6 +57,28 @@ Here is an exploratory visualization of the data set. I first display 20 random 
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
+I wrote my own routine image_augmentation.py in order to define functions for augmenting data. 
+
+As is evident from the histogram (above), the classes are not balanced and one of the objectives here is to balance the classes and generate more of fake data using the existing data.
+
+The routine defines functions like rotate_randomly, add_noise_randomly, translate, rescale_image, and flip image left-to-right and upside-down. 
+
+I use rotate_randomly, translate and crop functions to augment the images below. A sample of image augmentation is shown in the code cell below which shows the originial image and the augmented images for the traffic-sign: Speed Limit (50km/h).
+
+![50 kmph](./writeup_images/50kmph_Original.jpg)
+
+![](./writeup_images/Augmented_Images0.jpg)
+![](./writeup_images/Augmented_Images1.jpg)
+![](./writeup_images/Augmented_Images2.jpg)
+
+I automated the process for augmenting images in the codecell below.
+
+I choose an upper limit (900) as the frequency for each class. More fake images would be generated for any class which has samples less than 900. This trick is to ensure the classes are balanced. The upperlimit was chosen after an iterative process to see what number gives the best accuracy for the validation data.
+
+
+
+
+
 As a first step, I decided to convert the images to grayscale because ...
 
 Here is an example of a traffic sign image before and after grayscaling.
