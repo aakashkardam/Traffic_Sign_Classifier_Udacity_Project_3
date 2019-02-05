@@ -54,8 +54,8 @@ signs data set:
 
 Here is an exploratory visualization of the data set. I first display 20 random images from the training set and followed by a hisogram of the training set with Class ID on the x axis and number/frequency of the traffic sign belonging to that class ID denoted by the bar chart.
 
-![Random Images from the training set](./Random_Signs.jpg)
-![Histogram of training set][./Histogram.jpg]
+![Random Images from the training set](./writeup_images/Random_Signs.jpg)
+![Histogram of training set](./writeup_images/Histogram.jpg)
 
 ### Design and Test a Model Architecture
 
