@@ -180,6 +180,7 @@ If a well known architecture was chosen:
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are eight German traffic signs that I found on the web: (I used 8 instead of 5)
+
 ![New Set](./writeup_images/NewSet.jpg)
 
 
