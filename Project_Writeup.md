@@ -67,7 +67,7 @@ I use rotate_randomly, translate and crop functions to augment the images below.
 
 ![50 kmph](./writeup_images/50kmph_Original.jpg)
 
-![](./writeup_images/Augmented_Images0.jpg) ![](./writeup_images/Augmented_Images1.jpg) ![](./writeup_images/Augmented_Images2.jpg)
+![](./writeup_images/Augmented_Images.jpg)
 
 I automated the process for augmenting images in the codecell below.
 
