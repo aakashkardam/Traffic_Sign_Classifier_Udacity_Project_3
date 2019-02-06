@@ -204,33 +204,31 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
+| Keep Left      		| Keep Left   									| 
+| Speed Limit(20kmph)	| Speed Limit(20kmph)							|
 | Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Speed Limit(30kmph)	| Speed Limit(30kmph)			 				|
+| Children crossing		| Children crossing    							|
+| Turn left ahead		| Turn left ahead    							|
+| Roundabout mandatory	| Roundabout mandatory 							|
+| Speed Limit(100kmph)  | Speed Limit(100kmph) 							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 8 of the 8 traffic signs, which gives an accuracy of 100%. This is far better when compared to the accuracy on the test set of 93.1%.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the cell with heading "Predict the Sign Type for Each Image" in the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+The model is absolutely sure about all the 8 images. The top five softmax probabilities are shown below for each image in the new dataset.
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
+| 1.0,0,0,0,0  			| Keep Left   									| 
+| 1.0,0,0,0,0			| Speed Limit (20kmph)							|
+| 1.0,0,0,0,0			| Yield											|
+| 1.0,0,0,0,0  			| Speed Limit (30kmph)			 				|
+| 1.0,0,0,0,0		    | Children crossing   							|
+| 1.0,0,0,0,0		    | Turn left ahead      							|
+| 1.0,0,0,0,0		    | Roundabout mandatory 							|
+| 1.0,0,0,0,0		    | Speed Limit (100kmph)							|
