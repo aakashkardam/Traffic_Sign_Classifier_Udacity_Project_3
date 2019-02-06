@@ -181,7 +181,7 @@ If a well known architecture was chosen:
 
 Here are eight German traffic signs that I found on the web: (I used 8 instead of 5)
 
-![New Set](./writeup_images/NewSet.jpg)
+![New Set](./writeup_images/NewSet.png)
 
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
