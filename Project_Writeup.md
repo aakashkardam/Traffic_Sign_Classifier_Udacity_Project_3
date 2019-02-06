@@ -16,12 +16,6 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -31,7 +25,7 @@ The goals / steps of this project are the following:
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://view5f1639b6.udacity-student-workspaces.com/notebooks/CarND-Traffic-Sign-Classifier-Project/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
@@ -63,102 +57,96 @@ As is evident from the histogram (above), the classes are not balanced and one o
 
 The routine defines functions like rotate_randomly, add_noise_randomly, translate, rescale_image, and flip image left-to-right and upside-down. 
 
-I use rotate_randomly, translate and crop functions to augment the images below. A sample of image augmentation is shown in the code cell below which shows the originial image and the augmented images for the traffic-sign: Speed Limit (50km/h).
+I use rotate_randomly, translate and crop functions to augment the images below. A sample of image augmentation is shown below with both the original image and it's augmented counterparts of the traffic sign: Speed Limit (50kmph)
 
 ![50 kmph](./writeup_images/50kmph_Original.jpg)
 
-![](./writeup_images/Augmented_Images.png)
+![Augmented Images](./writeup_images/Augmented_Images.png)
 
-I automated the process for augmenting images in the codecell below.
+I automated the process for augmenting images in the codecell below the heading "Generating additional augmented images to be used for training".
 
-I choose an upper limit (900) as the frequency for each class. More fake images would be generated for any class which has samples less than 900. This trick is to ensure the classes are balanced. The upperlimit was chosen after an iterative process to see what number gives the best accuracy for the validation data.
+I choose an upper limit (900) as the frequency for each class. More fake images would be generated for any class which has samples less than 900. This trick is to ensure the classes are balanced. The upperlimit was chosen after an iterative process to see what number gives the best accuracy for the validation data. This additional data was appended to the original training set which results in not only a bigger training set but also a more balanced one. 
+
+The histogram below shows the balanced classes where the frequency of most of the classes is same and is equal to 900. This balancing also avoids the biasing in the model to predict a particular sign more often and have an unbaised set of learned parameters.
+
+![Augmented Images Histogram](./writeup_images/Augmented_Data_Histogram.jpg)
+
+Once the training set is balanced, I proceeded with the rest of preprocessing techniques like grayscale and batch normalization.
+
+First I converted the dataset in to gray scale images as implemented in the code cell below the heading "Convert to gray scale". The image below shows random 20 images after converting the data set to gray scale with only one channel. It helps to reduce the number of channels of an image to just one since the problem of traffic sign classifier can be described as a color invariant. 
+![Gray Random Signs](./writeup_images/Gray_Random_Signs.jpg)
 
 
+As a last step, I normalized the image data because it makes the case for a stable convergence of the gradient descent algorithm. This is implemented in the code cell below the heading "Applying normalization to the dataset".
 
-
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image22]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+My final model consisted of the following layers: (Reference: Yan Le Cunn's paper)
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
-
-
-* Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
-* Activation_1: ReLu(Layer_1)
-* Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
-* Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
-* Activation_2: ReLu(Layer_2)
-* Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
-* Layer_3: 5x5 Convolution. Input --> 5x5x16, Output 1x1x400
-* Activation_3: ReLu(Layer_3)
-* Flatten Layer_2 and Layer_3 both with size 400
-* Concatenate flattened Layer_2 and Layer_3, size 800
-* Dropout
-* Fully Connected Layer_4: Input --> 800, Output --> 43
-* Logits = Output of Fully Connected Layer_4
-
-
- 
+| Layer         		|     Description	        				                    	| 
+|:---------------------:|:-----------------------------------------------------------------:| 
+| Input         		| 32x32x3 RGB image   						                    	| 
+| L1 :Convolution 5x5  	| 1x1 stride, VALID padding, outputs 28x28x6                    	|
+| RELU(L1)				|								                    				|
+| Max pooling (L1)    	| filter 2x2, stride 2, input 28x28x6  output 14x14x6 				|
+| L2 :Convolution 5x5   | input 14x14x6, output 10x10x16   									|
+| RELU(L2)				|								                    				|
+| Max pooling (L2)    	| filter 2x2, stride 2, input 10x10x16  output 5x5x16 				|
+| L3 :Convolution 5x5   | input 5x5x16, output 1x1x400   									|
+| RELU(L3)				|								                    				|
+| Flatten L2 and L3 	| Both L2 and L3 have size 400	                    				|
+| Concatenate(L2,L3)	| Concatenate flattened Layers 2 and 3, output 400+400=800			|
+| Dropout				| keep_prob = 0.5                									|
+| Fully Connected L4	| input 800, output 43												|
+| Logits				| output of Fully Connected Layer 4									|
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+The model uses AdamOptimizer for both LeNet and Stage_2_LeNet. Following values were used for the hyperparameters:
+
+   * BATCH_SIZE: 100
+   * EPOCHS: 60
+   * Learning rate: 0.0010
+   * mu(mean) = 0.0
+   * sigma(SD) = 0.1
+   * dropout(keep_prob) = 0.5
+
+As such these parameters were fixed after trying out a lot of different while tuning the hyperparameters.
+
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* validation set accuracy of 95%  calculated under the heading "Training the model".
+* test set accuracy of 93.1% caluclated under the heading "Evaluate accuracy on the test data".
+* New set accuracy of 100% calculated under the heading "Predict the Sign Type for Each Image".
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
-* Activation_1: ReLu(Layer_1)
-* Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
-* Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
-* Activation_2: ReLu(Layer_2)
-* Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
-* Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
-* Fully Connected Layer_1: Input --> 400, Output --> 120
-* Activation_3: ReLu(Fully Connected Layer_1)
-* Dropout
-* Fully Connected Layer_2: Input --> 120, Output --> 84
-* Activation_4: ReLu(Fully Connected Layer_2)
-* Dropout
-* Fully Connected Layer_3: Input --> 84, Output -->83
-* Logits = ouput of Fully Connected Layer_3
+The suggested direction to approach this problem in the LeNet lecture was to first use the LeNet model architecture as it is (plug and play) and try to get the validation accuracy of 0.89. I started with the LeNet Model and achielved the same accuracy after tuning the hyperparameters. The aarchitecture for the LeNet model is also provided below.
+
+After that I read the Yann LeCun's paper on Convolutional Neural Network which describes another model architecture for 2 stage ConvNet where during the feed-forward phase, the input goes through 2 layers of convolutions and subsampling and then to the classifier. The output of stage 1 is also fed to the classifier.
+
+Implementing the second model improved the accuracy to more than 93% which is the requirement of this project for successful submission. The validation accuracy oscillates near 95% and the test accuracy is 93.1%.
+
+First Model to be used (LeNet model):
+    * Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
+    * Activation_1: ReLu(Layer_1)
+    * Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
+    * Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
+    * Activation_2: ReLu(Layer_2)
+    * Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
+    * Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
+    * Fully Connected Layer_1: Input --> 400, Output --> 120
+    * Activation_3: ReLu(Fully Connected Layer_1)
+    * Dropout
+    * Fully Connected Layer_2: Input --> 120, Output --> 84
+    * Activation_4: ReLu(Fully Connected Layer_2)
+    * Dropout
+    * Fully Connected Layer_3: Input --> 84, Output -->83
+    * Logits = ouput of Fully Connected Layer_3
+
 
 
 
@@ -191,12 +179,9 @@ If a well known architecture was chosen:
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are eight German traffic signs that I found on the web: (I used 8 instead of 5)
+![New Set](./writeup_images/NewSet.jpg)
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
