@@ -157,7 +157,7 @@ I could not ramp up the validation accuracy after trying a large range of hyperp
 
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 
-In the new model, we not only use the high level features from the last stage but the output of the first stage(after pooling/subsampling) is also fed to the classifier. This produced higher validation accuracy than before. As described in [Traffic SIgn Recognition with Multi_Scale Convolutional Networks](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), the second stage is responsible to draw out "global" and invariant shapes and structures, whereas the first stage draws out "local" motifs with more precise details. The final model architecture is desribed above in section 2.  
+In the new model, we not only use the high level features from the last stage but the output of the first stage(after pooling/subsampling) is also fed to the classifier. This produced higher validation accuracy than before. As described in [Traffic SIgn Recognition with Multi-Scale Convolutional Networks](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), the second stage is responsible to draw out "global" and invariant shapes and structures, whereas the first stage draws out "local" motifs with more precise details. The final model architecture is desribed above in section 2.  
 
 * Which parameters were tuned? How were they adjusted and why?
 
@@ -177,11 +177,21 @@ The parameters were adjusted based on the validation accuracy obtained after tra
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
+The design choices were to use the output of all stages to be fed into the classifier. A convolutional Network is capable of learning multiple stages of invariant features. Each layer is composed of a filter bank layer, anonlinear activation function, and a spatial feature pooling layer. The spatial pooling layer makes the representation robust to distortions and shifts present in the images. A dropout layer is responsible for regularization and reducing overfitting.
+
 If a well known architecture was chosen:
 * What architecture was chosen?
+
+A 2 stage ConvNet architecture was chosen
+
 * Why did you believe it would be relevant to the traffic sign application?
+
+
+
+
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
+ Once the model was trained and used to evaluate the validation set, an accuracy of as high as 95%. After that the evaluation on the test set produced an accuracy of 93.1% and yet after that, the accuracy on a completely new set (real world data) was 100%. This suggests that the model is working well on the new data. 
 
 ### Test a Model on New Images
 
