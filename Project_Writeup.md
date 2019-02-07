@@ -42,7 +42,7 @@ signs data set:
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. I first display 20 random images with thier Class IDs from the training set and followed by a hisogram of the training set with Class ID on the x axis and number/frequency of the traffic sign belonging to that class ID bucket denoted by the bar chart.
+Here is an exploratory visualization of the data set. I first display 20 random images with their Class IDs from the training set and followed by a hisogram of the training set, with Class ID on the x axis and number/frequency of the traffic sign belonging to that class ID on the y axis depicted by a bar graph.
 
 ![Random Images from the training set](./writeup_images/Random_Signs.jpg)
 ![Histogram of training set](./writeup_images/Histogram.jpg)
@@ -131,30 +131,37 @@ After that I read the Yann LeCun's paper on Convolutional Neural Network which d
 Implementing the second model improved the accuracy to more than 93% which is the requirement of this project for successful submission. The validation accuracy oscillates near 95% and the test accuracy is 93.1%.
 
 First Model to be used (LeNet model):
-    * Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
-    * Activation_1: ReLu(Layer_1)
-    * Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
-    * Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
-    * Activation_2: ReLu(Layer_2)
-    * Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
-    * Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
-    * Fully Connected Layer_1: Input --> 400, Output --> 120
-    * Activation_3: ReLu(Fully Connected Layer_1)
-    * Dropout
-    * Fully Connected Layer_2: Input --> 120, Output --> 84
-    * Activation_4: ReLu(Fully Connected Layer_2)
-    * Dropout
-    * Fully Connected Layer_3: Input --> 84, Output -->83
-    * Logits = ouput of Fully Connected Layer_3
+
+   * Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
+   * Activation_1: ReLu(Layer_1)
+   * Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
+   * Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
+   * Activation_2: ReLu(Layer_2)
+   * Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
+   * Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
+   * Fully Connected Layer_1: Input --> 400, Output --> 120
+   * Activation_3: ReLu(Fully Connected Layer_1)
+   * Dropout
+   * Fully Connected Layer_2: Input --> 120, Output --> 84
+   * Activation_4: ReLu(Fully Connected Layer_2)
+   * Dropout
+   * Fully Connected Layer_3: Input --> 84, Output -->83
+   * Logits = ouput of Fully Connected Layer_3
 
 
 
 
 * What were some problems with the initial architecture?
+
+I could not ramp up the validation accuracy after trying a large range of hyperparameters on the LeNet model. Better results were obtained once the data augmentation techniques were used with the initial (LeNet) architecture. In the LeNet model, only the high level features from the last stage is fed to the classier and the model does not make use of the low level features. This was adjusted in the 2 stage LeNet model.
+
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
+
+In the new model, we not only use the high level features from the last stage but the output of the first stage(after pooling/subsampling) is also fed to the classifier. This produced higher validation accuracy than before. As described in [Traffic SIgn Recognition with Multi_Scale Convolutional Networks](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), the second stage is responsible to draw out "global" and invariant shapes and structures, whereas the first stage draws out "local" motifs with more precise details. The final model architecture is desribed above in section 2.  
+
 * Which parameters were tuned? How were they adjusted and why?
 
-The model uses AdamOptimizer for both LeNet and Stage_2_LeNet. Following values were used for the hyperparameters:
+Following values were used for the hyperparameters:
 
 * BATCH_SIZE: 100
 * EPOCHS: 60 
@@ -163,7 +170,8 @@ The model uses AdamOptimizer for both LeNet and Stage_2_LeNet. Following values 
 * sigma(SD) = 0.1
 * dropout(keep_prob) = 0.5
 
-As such these parameters were fixed after trying out a lot of different while tuning the hyperparameters.
+As such these parameters were fixed after trying out a lot of different while tuning the hyperparameters. In addition to these parameters, another parameter, the upper limit (in data augmentation routine) to generate more fake data upto a threshold was also tuned with hit and trial and arrived at 900 after an iterative process. 
+The parameters were adjusted based on the validation accuracy obtained after training. 
 
 
 
