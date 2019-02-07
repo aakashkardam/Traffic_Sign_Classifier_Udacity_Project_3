@@ -132,23 +132,24 @@ Implementing the second model improved the accuracy to more than 93% which is th
 
 First Model to be used (LeNet model):
 
-   * Layer_1: 5x5 Convolution. Input --> 32x32x1, Output --> 28x28x6
-   * Activation_1: ReLu(Layer_1)
-   * Max Pooling Layer_1: Input --> 28x28x6, Output --> 14x14x6 with 2x2 filter and stride of 2
-   * Layer_2: 5x5 Convolution. Input --> 14x14x6, Output --> 10x10x16
-   * Activation_2: ReLu(Layer_2)
-   * Max Pooling Layer_2: Input --> 10x10x16, Output --> 5x5x16 with 2x2 filter and stride of 2
-   * Flatten Layer: Flatten the output shape of the final pooling layer such that it's 1D. Output --> 400
-   * Fully Connected Layer_1: Input --> 400, Output --> 120
-   * Activation_3: ReLu(Fully Connected Layer_1)
-   * Dropout
-   * Fully Connected Layer_2: Input --> 120, Output --> 84
-   * Activation_4: ReLu(Fully Connected Layer_2)
-   * Dropout
-   * Fully Connected Layer_3: Input --> 84, Output -->83
-   * Logits = ouput of Fully Connected Layer_3
-
-
+| Layer         		|     Description	        				                    	| 
+|:---------------------:|:-----------------------------------------------------------------:| 
+| Input         		| 32x32x3 RGB image   						                    	| 
+| L1 :Convolution 5x5  	| 1x1 stride, VALID padding, outputs 28x28x6                    	|
+| RELU(L1)				|								                    				|
+| Max pooling (L1)    	| filter 2x2, stride 2, input 28x28x6  output 14x14x6 				|
+| L2 :Convolution 5x5   | input 14x14x6, output 10x10x16   									|
+| RELU(L2)				|								                    				|
+| Max pooling (L2)    	| filter 2x2, stride 2, input 10x10x16  output 5x5x16 				|
+| Flatten L2        	| L2 has a size of 400	                            				|
+| Fully Connected L1    | input400 , output 120         									|
+| RELU(FCL_1)			|								                    				|
+| Dropout				| keep_prob = 0.5                									|
+| Fully Connected L2	| input 120, output 84												|
+| RELU(FCL_2)			|								                    				|
+| Dropout				| keep_prob = 0.5                									|
+| Fully Connected L3	| input 84, output 43												|
+| Logits				| output of Fully Connected Layer 3									|
 
 
 * What were some problems with the initial architecture?
@@ -183,11 +184,6 @@ If a well known architecture was chosen:
 * What architecture was chosen?
 
 A 2 stage ConvNet architecture was chosen
-
-* Why did you believe it would be relevant to the traffic sign application?
-
-
-
 
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
